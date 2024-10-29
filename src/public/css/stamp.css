@@ -1,0 +1,49 @@
+.stamp__content {
+    margin: 0 auto;
+    padding: 40px 0;
+    max-width: 1500px;
+}
+
+.stamp-form__heading {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.stamp-form__heading h2 {
+    color: #000000;
+}
+
+.flex__form__group {
+    display: flex;
+    justify-content: center;
+}
+
+.form__clock-in-button {
+    padding: 10px 0 10px 0;
+}
+
+.form__clock-out-button {
+    padding: 10px 0 10px 40px;
+}
+
+.form__break-in-button {
+    padding: 40px 0 20px 0;
+}
+
+.form__break-out-button {
+    padding: 40px 0 20px 40px;
+}
+
+.form__button-submit {
+    padding: 0 10px;
+    width: 500px;
+    height: 200px;
+    border: none;
+    border-radius: 3px;
+    background: #ffffff;
+    font-size: 25px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+}

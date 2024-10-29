@@ -1,0 +1,39 @@
+.attendance__content {
+    margin-top: -20px;
+    text-align: center;
+}
+
+.attendance-content__heading h2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+svg.w-5.h-5 {
+    /*paginateメソッドの矢印の大きさ調整のために追加*/
+    width: 30px;
+    height: 30px;
+}
+
+table {
+    margin: 0 auto;
+    margin-top: -20px;
+    width: 1000px;
+    border-spacing: 0;
+}
+
+table th {
+    border-top: solid 1px #7c7c7c;
+    text-align: center;
+    padding: 20px 30px;
+}
+
+table td {
+    border-top: solid 1px #7c7c7c;
+    text-align: center;
+    padding: 20px 30px;
+}
+
+.flex__pagination {
+    justify-content: center;
+    padding-top: 35px;
+}
