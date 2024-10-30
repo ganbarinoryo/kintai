@@ -9,55 +9,76 @@
 
 <div class="stamp__content">
     <div class="stamp-form__heading">
-        <h2>福場凛太郎さんお疲れ様です！</h2>
+        <h2>{{ Auth::user()->name }}さんお疲れ様です！</h2>
     </div>
 
 <!--勤務開始・終了-->
 
-<div class="flex__form__group">
+    <div class="flex__form__group">
 
-    <form class="form">
-        <div class="form__group-content">
-            <div class="form__clock-in-button">
-                <button class="form__button-submit" type="submit">
+        <form class="form" action="{{ route('clock.in') }}" method="POST">
+            @csrf
+            <div class="form__group-content">
+                <div class="form__clock-in-button">
+                    <button class="form__button-submit" @if(Auth::user()->clocks()->latest()->first() && Auth::user()->clocks()->latest()->first()->clock_in !== null) disabled @endif>
                     勤務開始
-            </button>
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <form class="form">
-        <div class="form__group-content">
-            <div class="form__clock-out-button">
-                <button class="form__button-submit" type="submit">勤務終了
-            </button>
+        <form class="form" action="{{ route('clock.out') }}" method="POST">
+            @csrf
+            <div class="form__group-content">
+                <div class="form__clock-out-button">
+                    <button class="form__button-submit" type="submit" 
+                    @if(!($currentClock = Auth::user()->clocks()->latest()->first()) || 
+                    $currentClock->clock_out !== null || 
+                    !($latestBreak = $currentClock->breakTimes()->latest()->first()) || 
+                    !$latestBreak->break_out) disabled @endif>
+                    勤務終了</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<!--休憩開始・終了-->
-
+<!-- 休憩開始・終了 -->
 <div class="flex__form__group">
 
-    <form class="form">
+    <form class="form" action="{{ route('break.in') }}" method="POST">
+        @csrf
         <div class="form__group-content">
             <div class="form__break-in-button">
-                <button class="form__button-submit" type="submit">休憩開始
-            </button>
+                <button class="form__button-submit" 
+                    @if(!Auth::user()->clocks()->latest()->first() || 
+                        (Auth::user()->clocks()->latest()->first()->clock_in === null) || 
+                        (Auth::user()->clocks()->latest()->first()->clock_out !== null)) disabled @endif>
+                    休憩開始
+                </button>
             </div>
         </div>
     </form>
 
-    <form class="form" action="">
+    <form class="form" action="{{ route('break.out') }}" method="POST">
+        @csrf
         <div class="form__group-content">
             <div class="form__break-out-button">
-                <button class="form__button-submit" type="submit">休憩終了
-            </button>
+                <button class="form__button-submit" @if(
+        !($currentClock = Auth::user()->clocks()->latest()->first()) || 
+        $currentClock->clock_out !== null || 
+        !($latestBreak = $currentClock->breakTimes()->latest()->first()) || 
+        $latestBreak->break_in === null || 
+        $latestBreak->break_out !== null
+    ) 
+        disabled 
+    @endif>
+                    休憩終了
+                </button>
             </div>
         </div>
     </form>
 </div>
+
 
 </div>
 @endsection

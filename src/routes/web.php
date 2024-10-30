@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StampController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClockController;
+use App\Http\Controllers\BreakTimeController;
+use App\Http\Controllers\AttendanceController;
+
+
 
 
 
@@ -18,9 +23,15 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth')->group(function () {
-    Route::get('/', [AuthController::class, 'stamp']);
+// 認証ミドルウェアを適用
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', [AuthController::class, 'stamp'])->name('home');
+    Route::get('/stamp', [ClockController::class, 'showStampPage'])->name('stamp.page');
+    Route::post('/clock/in', [ClockController::class, 'clockIn'])->name('clock.in');
+    Route::post('/clock/out', [ClockController::class, 'clockOut'])->name('clock.out');
+    Route::post('/break/in', [BreakTimeController::class, 'breakIn'])->name('break.in');
+    Route::post('/break/out', [BreakTimeController::class, 'breakOut'])->name('break.out');
+    Route::get('/attendance', [UserController::class, 'attendance']);
 });
 
-Route::get('/attendance', [UserController::class, 'attendance']);
-
+Route::get('/attendance', [AttendanceController::class, 'attendance'])->name('attendance');

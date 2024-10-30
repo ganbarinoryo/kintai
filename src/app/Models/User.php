@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // clocksメソッドの追加
+    public function clocks()
+    {
+        return $this->hasMany(Clock::class);
+    }
+
+    // BreakTimeとのリレーションを追加
+    public function breakTimes()
+    {
+        return $this->hasMany(BreakTime::class, 'clock_id', 'id');
+    }
 }

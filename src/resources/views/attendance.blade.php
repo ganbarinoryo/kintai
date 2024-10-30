@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('css')
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 <link rel="stylesheet" href="{{ asset('css/attendance.css') }}">
 <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
 @endsection
@@ -35,6 +37,6 @@
                 </tr>
 @endforeach
             </table>
-            <div class="flex__pagination">{{ $users->links() }}</div>
+            <div class="flex__pagination">{{ $users->links('pagination::Bootstrap-4') }}</div>
         </div>
 @endsection
