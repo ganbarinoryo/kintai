@@ -20,9 +20,12 @@
             @csrf
             <div class="form__group-content">
                 <div class="form__clock-in-button">
-                    <button class="form__button-submit" @if(Auth::user()->clocks()->latest()->first() && Auth::user()->clocks()->latest()->first()->clock_in !== null) disabled @endif>
+                    <button class="form__button-submit" type="submit"
+                    @if($todayClockIn = Auth::user()->clocks()->whereDate('clock_in', now()->toDateString())->first())
+                    disabled @endif>
                     勤務開始
                     </button>
+
                 </div>
             </div>
         </form>
@@ -32,11 +35,14 @@
             <div class="form__group-content">
                 <div class="form__clock-out-button">
                     <button class="form__button-submit" type="submit" 
-                    @if(!($currentClock = Auth::user()->clocks()->latest()->first()) || 
-                    $currentClock->clock_out !== null || 
-                    !($latestBreak = $currentClock->breakTimes()->latest()->first()) || 
-                    !$latestBreak->break_out) disabled @endif>
-                    勤務終了</button>
+                        @if(!($currentClock = Auth::user()->clocks()->latest()->first()) || 
+                        $currentClock->clock_out !== null || 
+                        !$currentClock->clock_in || 
+                        (($latestBreak = $currentClock->breakTimes()->latest()->first()) && !$latestBreak->break_out))
+                        disabled @endif>
+                        勤務終了
+                    </button>
+
                 </div>
             </div>
         </form>

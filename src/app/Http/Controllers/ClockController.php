@@ -9,10 +9,18 @@ use App\Models\Clock;
 
 class ClockController extends Controller
 {
+    //勤務開始ボタン
     public function clockIn(Request $request)
     {
+        //現在のユーザーの最新の打刻を取得
         $currentClock = Clock::where('user_id', Auth::id())->latest()->first();
 
+        // 当日の勤務開始レコードが存在するか確認
+        $todayClockIn = Clock::where('user_id', Auth::id())
+        ->whereDate('clock_in', now()->toDateString())
+        ->first();
+
+        //当日分の開始打刻データがない場合新しい打刻を作成
         $clock = new Clock();
         $clock->user_id = Auth::id(); // 現在のユーザーIDを取得
         $clock->clock_in = now()->format('H:i:s'); // 現在の時刻を設定
@@ -21,9 +29,10 @@ class ClockController extends Controller
         return redirect()->back()->with('status', '勤務開始しました！');
     }
 
+    //勤務終了ボタン
     public function clockOut(Request $request)
     {
-    // 最新の勤務記録を取得
+    // 現在のユーザーの最新の勤務記録を取得
     $clock = Clock::where('user_id', Auth::id())->latest()->first();
 
     // 勤務記録がない、または勤務開始が記録されていない場合はエラー
@@ -39,7 +48,8 @@ class ClockController extends Controller
     // 最新の休憩記録を取得
     $latestBreak = $clock->breakTimes()->latest()->first();
 
-    // 未終了の休憩がある場合はエラー
+    // 休憩開始のレコードが存在し、休憩終了レコードがない場合はエラー
+    $latestBreak = $clock->breakTimes()->latest()->first();
     if ($latestBreak && !$latestBreak->break_out) {
         return redirect()->back()->with('error', '休憩が終了していません。');
     }
