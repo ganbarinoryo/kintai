@@ -16,8 +16,8 @@ class CreateBreakTimesTable extends Migration
         Schema::create('break_times', function (Blueprint $table) {
             $table->id(); // 自動インクリメントID
             $table->unsignedBigInteger('clock_id'); // clock_id
-            $table->time('break_in')->nullable(); // 休憩開始
-            $table->time('break_out')->nullable(); // 休憩終了
+            $table->datetime('break_in')->nullable(); // 休憩開始
+            $table->datetime('break_out')->nullable(); // 休憩終了
             $table->timestamps();
 
             // 外部キー制約の追加

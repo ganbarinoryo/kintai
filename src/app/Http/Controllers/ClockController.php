@@ -33,17 +33,17 @@ class ClockController extends Controller
     public function clockOut(Request $request)
     {
     // 現在のユーザーの最新の勤務記録を取得
-    $clock = Clock::where('user_id', Auth::id())->latest()->first();
+        $clock = Clock::where('user_id', Auth::id())->latest()->first();
 
     // 勤務記録がない、または勤務開始が記録されていない場合はエラー
-    if (!$clock || !$clock->clock_in) {
+        if (!$clock || !$clock->clock_in) {
         return redirect()->back()->with('error', '勤務開始記録がありません。');
-    }
+        }
 
     // 既に勤務終了している場合はエラー
-    if ($clock->clock_out) {
+        if ($clock->clock_out) {
         return redirect()->back()->with('error', 'すでに勤務終了しています。');
-    }
+        }
 
     // 最新の休憩記録を取得
     $latestBreak = $clock->breakTimes()->latest()->first();

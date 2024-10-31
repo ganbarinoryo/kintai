@@ -64,8 +64,8 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $clock->clock_in }}</td>
-                    <td>{{ $clock->clock_out }}</td>
+                    <td>{{ $clock->formatted_clock_in }}</td>
+                    <td>{{ $clock->formatted_clock_out }}</td>
                     <td>{{ $clock->formatted_total_break }}</td>
                     <td>{{ $clock->formatted_total_work }}</td>
                 </tr>

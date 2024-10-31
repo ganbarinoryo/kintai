@@ -16,6 +16,18 @@ class BreakTime extends Model
         'break_out',
     ];
 
+    // break_in を H:i:s 形式でフォーマット
+    public function getFormattedBreakInAttribute()
+    {
+        return $this->break_in ? Carbon::parse($this->break_in)->format('H:i:s') : '---';
+    }
+
+    // break_out を H:i:s 形式でフォーマット
+    public function getFormattedBreakOutAttribute()
+    {
+        return $this->break_out ? Carbon::parse($this->break_out)->format('H:i:s') : '---';
+    }
+
     // clocksテーブルとのリレーション
     public function clock()
     {
