@@ -60,14 +60,16 @@
                     <th>勤務時間</th>
                 </tr>
 @foreach ($users as $user)
+    @foreach ($user->clocks as $clock)
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->clock_in }}</td>
-                    <td>{{ $user->clock_out }}</td>
-                    <td>{{ $user->total_break }}</td>
-                    <td>{{ $user->total_work }}</td>
+                    <td>{{ $clock->clock_in }}</td>
+                    <td>{{ $clock->clock_out }}</td>
+                    <td>{{ $clock->formatted_total_break }}</td>
+                    <td>{{ $clock->formatted_total_work }}</td>
                 </tr>
+    @endforeach
 @endforeach
             </table>
             <div class="flex__pagination">{{ $users->links('pagination::Bootstrap-4') }}</div>

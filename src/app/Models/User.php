@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\User;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -52,5 +54,12 @@ class User extends Authenticatable
     public function breakTimes()
     {
         return $this->hasMany(BreakTime::class, 'clock_id', 'id');
+    }
+
+    // 各ユーザーの勤務データと休憩データを取得
+    public function attendance()
+    {
+        $users = User::with(['clocks.breakTimes'])->get();
+        return view('your_view_name', compact('users'));
     }
 }
