@@ -47,11 +47,11 @@
         </div>
 
         <div class="form__button">
-            <button class="form__button-submit" type="submit">ログイン
+                <button class="form__button-submit" type="submit">ログイン
             </button>
         </div>
 
-        <div class="form__login-link">
+        <div class="form__register-link">
             <p>アカウントをお持ちでない方はこちらから<br><a href="/register">会員登録</a>
             </p>
         </div>

@@ -44,8 +44,8 @@
 
 <div class="attendance__content">
     <div class="attendance-content__heading">
-        <h2>山田太郎さんお疲れ様です！</h2>
-    </div>
+    <a class="left" href=>＜</a><span>山田太郎さんお疲れ様です</span><a class="right" href=>＞</a>
+</div>
 
 <!--データテーブル-->
 
@@ -60,16 +60,14 @@
                     <th>勤務時間</th>
                 </tr>
 @foreach ($users as $user)
-    @foreach ($user->clocks as $clock)
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $clock->formatted_clock_in }}</td>
-                    <td>{{ $clock->formatted_clock_out }}</td>
-                    <td>{{ $clock->formatted_total_break }}</td>
-                    <td>{{ $clock->formatted_total_work }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-    @endforeach
 @endforeach
             </table>
             <div class="flex__pagination">{{ $users->links('pagination::Bootstrap-4') }}</div>

@@ -13,6 +13,11 @@ class Clock extends Model
 
     protected $fillable = ['user_id', 'clock_in', 'clock_out'];
 
+    protected $casts = [
+        'clock_in' => 'datetime',
+        'clock_out' => 'datetime',
+    ];
+
     // userメソッドの追加
     public function user()
     {

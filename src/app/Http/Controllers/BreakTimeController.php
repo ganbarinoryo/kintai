@@ -1,5 +1,7 @@
 <?php
 
+//簡略化済み
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,49 +11,52 @@ use App\Models\Clock;
 
 class BreakTimeController extends Controller
 {
+    private const ERROR_NO_CLOCK_RECORD = '勤務記録がありません。';
+    private const ERROR_INVALID_OPERATION = '無効な操作です。';
+    private const ERROR_NO_BREAK_IN_RECORD = '休憩開始記録がありません。';
+
     public function breakIn(Request $request)
     {
-        $currentClock = Clock::where('user_id', Auth::id())->latest()->first();
+        $currentClock = $this->getCurrentClock();
 
-        // 勤務記録が存在し、勤務開始がある場合のみ打刻可能
         if (!$currentClock || !$currentClock->clock_in) {
-            return redirect()->back()->with('error', '勤務記録がありません。');
+            return redirect()->back()->with('error', self::ERROR_NO_CLOCK_RECORD);
         }
 
         // 休憩開始の記録を作成
-        $breakTime = new BreakTime();
-        $breakTime->clock_id = $currentClock->id; // 現在の勤務記録のID
-        $breakTime->break_in = now()->format('H:i:s'); // 現在の時刻を設定
-        $breakTime->save(); // DBに保存
+        BreakTime::create([
+            'clock_id' => $currentClock->id,
+            'break_in' => now()->format('H:i:s')
+        ]);
 
         return redirect()->back()->with('status', '休憩を開始しました！');
     }
 
     public function breakOut(Request $request)
     {
-        // 現在のユーザーの勤務記録を取得
-        $currentClock = Clock::where('user_id', Auth::id())->latest()->first();
-        
-        // 勤務が開始されていない、または終了している場合は打刻不可
-        if (!$currentClock || !$currentClock->clock_in || $currentClock->clock_out !== null) {
-            return redirect()->back()->with('error', '無効な操作です。');
-        }
-        
-        // 最新の休憩記録を取得
-        $breakTime = BreakTime::where('clock_id', function ($query) {
-            $query->select('id')->from('clocks')->where('user_id', Auth::id())->latest();
-        })->latest()->first();
+        $currentClock = $this->getCurrentClock();
 
-        // break_in が存在し、かつ break_out が未設定の場合のみ休憩終了を許可
-        if ($breakTime && $breakTime->break_in !== null && $breakTime->break_out === null) {
-        $breakTime->break_out = now()->format('H:i:s'); // 現在の時刻を設定
-        $breakTime->save(); // DBに保存
-        return redirect()->back()->with('status', '休憩を終了しました！');
+        if (!$currentClock || !$currentClock->clock_in || $currentClock->clock_out) {
+            return redirect()->back()->with('error', self::ERROR_INVALID_OPERATION);
+        }
+
+        $breakTime = $this->getLatestBreakTime($currentClock->id);
+
+        if ($breakTime && $breakTime->break_in && !$breakTime->break_out) {
+            $breakTime->update(['break_out' => now()->format('H:i:s')]);
+            return redirect()->back()->with('status', '休憩を終了しました！');
+        }
+
+        return redirect()->back()->with('error', self::ERROR_NO_BREAK_IN_RECORD);
     }
 
-        
-        
+    private function getCurrentClock()
+    {
+        return Clock::where('user_id', Auth::id())->latest()->first();
+    }
 
-        return redirect()->back()->with('error', '休憩開始記録がありません。');
+    private function getLatestBreakTime($clockId)
+    {
+        return BreakTime::where('clock_id', $clockId)->latest()->first();
     }
 }

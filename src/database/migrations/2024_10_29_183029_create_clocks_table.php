@@ -16,8 +16,8 @@ class CreateClocksTable extends Migration
         Schema::create('clocks', function (Blueprint $table) {
             $table->id(); // idカラム
             $table->foreignId('user_id')->constrained('users'); // usersテーブルのidと紐づけ
-            $table->datetime('clock_in')->nullable(); // 勤務開始
-            $table->datetime('clock_out')->nullable(); // 勤務終了
+            $table->time('clock_in')->nullable(); // 勤務開始
+            $table->time('clock_out')->nullable(); // 勤務終了
             $table->timestamps(); // created_atとupdated_at
         });
     }

@@ -10,5 +10,4 @@ class AuthController extends Controller
     {
         return view('stamp');
     }
-
 }

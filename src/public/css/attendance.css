@@ -45,6 +45,25 @@ main {
     color: black;
 }
 
+.attendance-content__heading {
+    padding-top: 50px;
+}
+
+.attendance-content__heading span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.left {
+    font-size: 24px;
+    padding-right: 15px;
+}
+
+.right {
+    font-size: 24px;
+    padding-left: 15px;
+}
+
 .header-nav__button {
     padding: 0 30px;
     border: none;
@@ -60,17 +79,14 @@ main {
     text-align: center;
 }
 
-.attendance-content__heading h2 {
-    font-weight: bold;
-    font-size: 24px;
-    padding-top: 54px;
-    padding-bottom: 30px;
-}
-
 svg.w-5.h-5 {
     /*paginateメソッドの矢印の大きさ調整のために追加*/
     width: 30px;
     height: 30px;
+}
+
+.data-table {
+    padding-top: 30px;
 }
 
 table {
