@@ -16,6 +16,12 @@ class BreakTime extends Model
         'break_out',
     ];
 
+    // clocksテーブルとのリレーション
+    public function clock()
+    {
+        return $this->belongsTo(Clock::class, 'clock_id');
+    }
+
     // break_in を H:i:s 形式でフォーマット
     public function getFormattedBreakInAttribute()
     {
@@ -26,12 +32,6 @@ class BreakTime extends Model
     public function getFormattedBreakOutAttribute()
     {
         return $this->break_out ? Carbon::parse($this->break_out)->format('H:i:s') : '---';
-    }
-
-    // clocksテーブルとのリレーション
-    public function clock()
-    {
-        return $this->belongsTo(Clock::class, 'clock_id');
     }
 
 }

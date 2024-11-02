@@ -62,20 +62,6 @@ class ClockController extends Controller
         return view('stamp', compact('currentClock', 'latestBreak'));
     }
 
-    public function showAttendanceByDate(Request $request, $date = null)
-    {
-        $date = $date ? Carbon::parse($date) : Carbon::today();
-        $user = Auth::user();
-        $clocks = $user->clocks()->whereDate('clock_in', $date->toDateString())->get();
-        $dateExists = $clocks->isNotEmpty();
-
-        return view('attendance', compact('user', 'clocks', 'date', 'dateExists', 'previousDate', 'nextDate'))
-            ->with([
-                'previousDate' => $date->copy()->subDay(),
-                'nextDate' => $date->copy()->addDay()
-            ]);
-    }
-
     private function hasClockedInToday(): bool
     {
         return Clock::where('user_id', Auth::id())

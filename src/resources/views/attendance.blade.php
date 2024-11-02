@@ -42,9 +42,10 @@
 
 <main>
 
-<div class="attendance__content">
-    <div class="attendance-content__heading">
-    <a class="left" href=>＜</a><span>山田太郎さんお疲れ様です</span><a class="right" href=>＞</a>
+<div class="flex__attendance__content">
+        <button class="button_left" href="{{ route('attendance.show', ['date' => $date->copy()->subDay()->toDateString()]) }}">＜</button>
+        <div class="center">{{ $date->format('Y-m-d') }}</div>
+        <button class="button_right" href="{{ route('attendance.show', ['date' => $date->copy()->addDay()->toDateString()]) }}">＞</button>
 </div>
 
 <!--データテーブル-->
@@ -60,14 +61,28 @@
                     <th>勤務時間</th>
                 </tr>
 @foreach ($users as $user)
+    @foreach ($user->clocks as $clock)
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ \Carbon\Carbon::parse($clock->clock_in)->format('H:i:s') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($clock->clock_out)->format('H:i:s') }}</td>
+                    <td>@php
+                    // 総休憩時間を計算
+                    $totalBreakTime = $clock->breakTimes->sum(function($break) {
+                        return strtotime($break->break_out) - strtotime($break->break_in);
+                    });
+                    echo gmdate("H:i:s", $totalBreakTime);
+                    @endphp</td>
+                    <td>@php
+                    // 勤務終了時間を取得
+                    $clockOut = $clock->clock_out ? strtotime($clock->clock_out) : time();
+                    // 勤務時間を計算
+                    $work_time = ($clockOut - strtotime($clock->clock_in)) - $totalBreakTime;
+                    echo gmdate("H:i:s", $work_time);
+                    @endphp</td>
                 </tr>
+    @endforeach
 @endforeach
             </table>
             <div class="flex__pagination">{{ $users->links('pagination::Bootstrap-4') }}</div>

@@ -32,11 +32,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/break/in', [BreakTimeController::class, 'breakIn'])->name('break.in');
     Route::post('/break/out', [BreakTimeController::class, 'breakOut'])->name('break.out');
     Route::get('/attendance', [UserController::class, 'attendance']);
-    
-    Route::get('attendance', [ClockController::class, 'index'])->name('attendance.index');
 
-    //日付を渡せるようにする処理
-    Route::get('attendance/date/{date?}', [ClockController::class, 'showAttendanceByDate'])->name('attendance.date');
+    // 特定の日付の出席データの表示
+    Route::get('/attendance/{date}', [AttendanceController::class, 'showAttendanceByDate'])->name('attendance.show');
+
 });
 
 Route::get('/attendance', [AttendanceController::class, 'attendance'])->name('attendance');
