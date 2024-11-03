@@ -66,7 +66,7 @@ a:hover {
 
 .button_left {
     margin-right: 10px;
-    padding: 3px;
+    padding: 5px;
     width: 35px;
     height: 35px;
     border: none;
@@ -76,9 +76,14 @@ a:hover {
     cursor: pointer;
 }
 
+.button_left:focus {
+    color: #000000;
+    outline: none;
+}
+
 .button_right {
     margin-left: 10px;
-    padding: 3px;
+    padding: 5px;
     width: 35px;
     height: 35px;
     border: none;
@@ -86,6 +91,11 @@ a:hover {
     background: #ffffff;
     color: #000000;
     cursor: pointer;
+}
+
+.button_right:focus {
+    color: #000000;
+    outline: none;
 }
 
 .header-nav__button {

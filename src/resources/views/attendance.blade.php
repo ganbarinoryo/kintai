@@ -43,9 +43,9 @@
 <main>
 
 <div class="flex__attendance__content">
-        <button class="button_left" href="{{ route('attendance.show', ['date' => $date->copy()->subDay()->toDateString()]) }}">＜</button>
+        <a class="button_left" href="{{ route('attendance.show', ['date' => $date->copy()->subDay()->toDateString()]) }}">＜</a>
         <div class="center">{{ $date->format('Y-m-d') }}</div>
-        <button class="button_right" href="{{ route('attendance.show', ['date' => $date->copy()->addDay()->toDateString()]) }}">＞</button>
+        <a class="button_right" href="{{ route('attendance.show', ['date' => $date->copy()->addDay()->toDateString()]) }}">＞</a>
 </div>
 
 <!--データテーブル-->
@@ -62,6 +62,7 @@
                 </tr>
 @foreach ($users as $user)
     @foreach ($user->clocks as $clock)
+    @if (\Carbon\Carbon::parse($clock->clock_in)->format('Y-m-d') === $date->format('Y-m-d'))
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
@@ -82,6 +83,7 @@
                     echo gmdate("H:i:s", $work_time);
                     @endphp</td>
                 </tr>
+        @endif
     @endforeach
 @endforeach
             </table>

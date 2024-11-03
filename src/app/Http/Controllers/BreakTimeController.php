@@ -59,4 +59,23 @@ class BreakTimeController extends Controller
     {
         return BreakTime::where('clock_id', $clockId)->latest()->first();
     }
+
+    // ボタンを無効化するかどうかを判定するメソッド
+    public function isButtonDisabled()
+    {
+        $currentClock = $this->getCurrentClock();
+
+        // 勤務開始がない、勤務終了済み、または最新の休憩が終了していない場合に無効化
+        if (
+            !$currentClock ||
+            $currentClock->clock_in === null ||
+            $currentClock->clock_out !== null ||
+            ($currentClock->breakTimes()->latest()->first() &&
+             $currentClock->breakTimes()->latest()->first()->break_out === null)
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }

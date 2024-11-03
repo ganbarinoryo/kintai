@@ -57,8 +57,10 @@
             <div class="form__break-in-button">
                 <button class="form__button-submit" 
                     @if(!Auth::user()->clocks()->latest()->first() || 
-                        (Auth::user()->clocks()->latest()->first()->clock_in === null) || 
-                        (Auth::user()->clocks()->latest()->first()->clock_out !== null)) disabled @endif>
+                    (Auth::user()->clocks()->latest()->first()->clock_in === null) || 
+                    (Auth::user()->clocks()->latest()->first()->clock_out !== null) || 
+                    (Auth::user()->clocks()->latest()->first()->breakTimes()->latest()->first() && 
+                    Auth::user()->clocks()->latest()->first()->breakTimes()->latest()->first()->break_out === null)) disabled @endif>
                     休憩開始
                 </button>
             </div>
