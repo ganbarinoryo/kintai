@@ -17,32 +17,33 @@ use Illuminate\Support\Facades\Cache;
         $date = Carbon::parse($date);
 
         // ユーザーデータを取得し、日付に基づくクレックデータを取得
-        $users = $this->getUsersWithClocks($date);
+        $users = $this->getUsersWithClocks($date->toDateString());
 
         // attendance.blade.phpビューにデータを渡す
         return view('attendance', compact('users', 'date'))
             ->with([
-                'previousDate' => $date->copy()->subDay(),
-                'nextDate' => $date->copy()->addDay()
+                'previousDate' => $date->copy()->subDay()->toDateString(),
+                'nextDate' => $date->copy()->addDay()->toDateString()
             ]);
     }
 
     public function showAttendanceByDate(Request $request, $date = null)
     {
         $date = $date ? Carbon::parse($date) : Carbon::today();
-        $users = $this->getUsersWithClocks($date);
+        $users = $this->getUsersWithClocks($date->toDateString());
 
         return view('attendance', compact('users', 'date'))
             ->with([
-                'previousDate' => $date->copy()->subDay(),
-                'nextDate' => $date->copy()->addDay()
+                'previousDate' => $date->copy()->subDay()->toDateString(),
+                'nextDate' => $date->copy()->addDay()->toDateString()
             ]);
     }
 
     private function getUsersWithClocks($date)
     {
+        // ユーザーとその日のクレックデータを取得
         return User::with(['clocks' => function($query) use ($date) {
-            $query->whereDate('clock_in', $date); // clock_inが指定された日付のデータのみ取得
+            $query->whereDate('created_at', $date); // created_atが指定された日付のデータのみ取得
         }])->paginate(5); // 5件ごとにページネーション
     }
 }
