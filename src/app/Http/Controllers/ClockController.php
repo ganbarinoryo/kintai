@@ -16,18 +16,30 @@ class ClockController extends Controller
     private const ERROR_BREAK_NOT_ENDED = '休憩が終了していません。';
 
     // 勤務開始ボタン
-    public function clockIn(Request $request)
+   public function clockIn(Request $request)
     {
-        if ($this->hasClockedInToday()) {
-            return redirect()->back()->with('error', '今日の勤務開始は既に記録されています。');
-        }
+    // 本日すでに勤務開始しているかを確認（created_atを基にチェック）
+    if ($this->hasClockedInToday()) {
+        // すでに勤務開始が記録されている場合はエラーメッセージを設定してリダイレクト
+        return redirect()->back()->with('error', '今日の勤務開始は既に記録されています。');
+    }
 
-        Clock::create([
-            'user_id' => Auth::id(),
-            'clock_in' => now()->format('H:i:s')
-        ]);
+    // 本日の勤務開始時刻をClockテーブルに新規レコードとして記録
+    Clock::create([
+        'user_id' => Auth::id(),           // 現在のユーザーIDを記録
+        'clock_in' => now()->format('H:i:s') // 現在の時刻をHH:MM:SS形式で記録
+    ]);
 
-        return redirect()->back()->with('status', '勤務開始しました！');
+    // リダイレクトしてボタンが再度表示されるのを防ぐため、元のページに戻る
+    return redirect()->back();
+    }
+
+    private function hasClockedInToday(): bool
+    {
+    // 当日レコードがcreated_atで存在するか確認
+    return Clock::where('user_id', Auth::id())
+                ->whereDate('created_at', now()->toDateString())
+                ->exists();
     }
 
     // 勤務終了ボタン
@@ -60,13 +72,6 @@ class ClockController extends Controller
         $latestBreak = $currentClock ? $currentClock->breakTimes()->latest()->first() : null;
 
         return view('stamp', compact('currentClock', 'latestBreak'));
-    }
-
-    private function hasClockedInToday(): bool
-    {
-        return Clock::where('user_id', Auth::id())
-                    ->whereDate('clock_in', now()->toDateString())
-                    ->exists();
     }
 
     private function getCurrentClock()

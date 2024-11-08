@@ -17,18 +17,19 @@
     <div class="flex__form__group">
 
         <form class="form" action="{{ route('clock.in') }}" method="POST">
-            @csrf
-            <div class="form__group-content">
-                <div class="form__clock-in-button">
-                    <button class="form__button-submit" type="submit"
-                    @if($todayClockIn = Auth::user()->clocks()->whereDate('clock_in', now()->toDateString())->first())
-                    disabled @endif>
-                    勤務開始
-                    </button>
-
-                </div>
+        @csrf
+        <div class="form__group-content">
+            <div class="form__clock-in-button">
+                <button class="form__button-submit" type="submit"
+                @if(Auth::user()->clocks()->whereDate('created_at', now()->toDateString())->exists())
+                disabled
+                @endif>
+                勤務開始
+                </button>
             </div>
-        </form>
+        </div>
+    </form>
+
 
         <form class="form" action="{{ route('clock.out') }}" method="POST">
             @csrf
