@@ -12,4 +12,6 @@ class UserController extends Controller
         $users = User::Paginate(5);
         return view('attendance', ['users' => $users]);
     }
+
+    
 }

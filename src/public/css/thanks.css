@@ -1,0 +1,75 @@
+* {
+    font-family: 'Hiragino Kaku Gothic ProN';
+}
+
+main {
+    background-color: #ebebeb;
+
+}
+
+.header {
+    background-color: #ffffff;
+    height: 90px;
+}
+
+.header__inner {
+    margin: 0 auto;
+    padding: 20px 15px;
+    max-width: 1500px;
+}
+
+.header__logo {
+    padding-left: 50px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.center {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.header-nav__button:focus {
+    color: #000000;
+    outline: none;
+}
+
+svg.w-5.h-5 {
+    /*paginateメソッドの矢印の大きさ調整のために追加*/
+    width: 30px;
+    height: 30px;
+}
+
+.container {
+    padding-top: 15px;
+    width: 100%;
+    height: 620px;
+    text-align: center;
+}
+
+.container h2 {
+    padding-top: 10px;
+}
+
+p {
+    font-size: small;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.footer__inner h5 {
+    font-family: 'Hiragino Kaku Gothic ProN';
+    font-weight: bold;
+    font-size: 13.3px;
+    
+}

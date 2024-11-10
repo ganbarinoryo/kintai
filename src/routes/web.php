@@ -23,6 +23,14 @@ use App\Http\Controllers\AttendanceController;
 |
 */
 
+// ユーザー登録フォームの送信処理（未認証ユーザーもアクセス可能）
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+
+// サンクスページ表示（未認証ユーザーもアクセス可能）
+Route::get('/thanks', function () {
+    return view('thanks');
+})->name('thanks');
+
 // 認証ミドルウェアを適用
 Route::middleware(['auth'])->group(function () {
 
