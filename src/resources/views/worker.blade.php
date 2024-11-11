@@ -8,7 +8,7 @@
   <title>Atte</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
-  <link rel="stylesheet" href="{{ asset('css/attendance.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/worker.css') }}" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             </li>
 
             <li class="header-nav__item">
-                <form action="" method="">
+                <form action="/worker" method="get">
                     @csrf
                     <button class="header-nav__button">ユーザー一覧</button>
                 </form>
@@ -43,6 +43,7 @@
                     <button class="header-nav__button">日付一覧</button>
                 </form>
             </li>
+
             <li class="header-nav__item">
                 <form action="/logout" method="POST">
                     @csrf
@@ -51,15 +52,12 @@
             </li>
             @endif
           </ul>
-
-</div>
-</header>
+        </div>
+    </header>
 
 <main>
-    <div class="flex__attendance__content">
-        <a class="button_left" href="{{ route('attendance.show', ['date' => $date->copy()->subDay()->toDateString()]) }}">＜</a>
-        <div class="center">{{ $date->format('Y-m-d') }}</div>
-        <a class="button_right" href="{{ route('attendance.show', ['date' => $date->copy()->addDay()->toDateString()]) }}">＞</a>
+    <div class="worker__content">
+        <h2>ユーザー一覧</h2>
     </div>
 
     <!--データテーブル-->
@@ -68,36 +66,15 @@
             <tr>
                 <th>id</th>
                 <th>名前</th>
-                <th>勤務開始</th>
-                <th>勤務終了</th>
-                <th>休憩時間</th>
-                <th>勤務時間</th>
             </tr>
-            @foreach ($users as $user)
-                @foreach ($user->clocks as $clock)
-                    <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($clock->clock_in)->format('H:i:s') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($clock->clock_out)->format('H:i:s') }}</td>
-                        <td>@php
-                            // 総休憩時間を計算
-                            $totalBreakTime = $clock->breakTimes->sum(function($break) {
-                                return strtotime($break->break_out) - strtotime($break->break_in);
-                            });
-                            echo gmdate("H:i:s", $totalBreakTime);
-                        @endphp</td>
-                        <td>@php
-                            // 勤務終了時間を取得
-                            $clockOut = $clock->clock_out ? strtotime($clock->clock_out) : time();
-                            // 勤務時間を計算
-                            $work_time = ($clockOut - strtotime($clock->clock_in)) - $totalBreakTime;
-                            echo gmdate("H:i:s", $work_time);
-                        @endphp</td>
-                    </tr>
-                @endforeach
-            @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+            </tr>
+        @endforeach
         </table>
+
         <div class="flex__pagination">{{ $users->links('pagination::Bootstrap-4') }}</div>
     </div>
 </main>
@@ -110,3 +87,4 @@
 
 </body>
 </html>
+</body>

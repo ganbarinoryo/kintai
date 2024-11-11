@@ -119,15 +119,25 @@ svg.w-5.h-5 {
     height: 30px;
 }
 
+.worker__content {
+    text-align: center;
+    padding-top: 54px;
+}
+
+.worker__content h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
 .data-table {
-    padding-top: 30px;
+    padding-top: 26px;
     height: 550px;
     width: 100%;
 }
 
 table {
     margin: 0 auto;
-    width: 1000px;
+    width: 500px;
     border-spacing: 0;
 }
 

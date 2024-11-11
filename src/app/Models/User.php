@@ -44,6 +44,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $table = 'users';
+
+
     // clocksメソッドの追加
     public function clocks()
     {

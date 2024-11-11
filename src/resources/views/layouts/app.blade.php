@@ -24,6 +24,21 @@
             <li class="header-nav__item">
                 <a href="/">ホーム</a>
             </li>
+
+            <li class="header-nav__item">
+                <form action="/worker" method="get">
+                    @csrf
+                    <button class="header-nav__button">ユーザー一覧</button>
+                </form>
+            </li>
+
+            <li class="header-nav__item">
+                <form action="" method="">
+                    @csrf
+                    <button class="header-nav__button">個別勤怠一覧</button>
+                </form>
+            </li>
+
             <li class="header-nav__item">
                 <form action="/attendance" method="get">
                     @csrf
