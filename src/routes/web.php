@@ -65,6 +65,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/work_history', [WorkHistoryController::class, 'work_history']);
     Route::get('/work_history', [WorkHistoryController::class, 'index'])->name('work_history')->middleware('auth');
 
+    //ユーザーを選択して勤務履歴を表示する
+    Route::get('/work_history', [WorkHistoryController::class, 'showWorkHistory'])->name('work_history');
+
 
 
     // 特定の日付の出勤情報の表示

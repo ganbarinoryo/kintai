@@ -20,4 +20,20 @@ class WorkHistoryController extends Controller
         // ビューにデータを渡す
         return view('work_history', compact('user', 'clocks'));
     }
+
+    public function showWorkHistory(Request $request)
+{
+    // デフォルトは認証中のユーザーID
+    $userId = $request->get('user_id', auth()->id());
+
+    // 全ユーザーのリストを取得
+    $users = User::all();
+
+    // ページネートで勤務履歴を取得
+    $clocks = Clock::where('user_id', $userId)->paginate(5);
+
+    // ビューに渡す
+    return view('work_history', compact('users', 'clocks'));
+}
+
 }

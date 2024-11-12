@@ -49,7 +49,7 @@
                     @csrf
                     <button class="header-nav__button">ログアウト</button>
                 </form>
-            </li>
+            </li>k
             @endif
           </ul>
         </div>
@@ -57,7 +57,19 @@
 
 <main>
     <div class="content">
-        <h2>{{ Auth::user()->name }}さんの勤務状況</h2>
+        <!-- ユーザー選択用のドロップダウン -->
+    <form action="{{ route('work_history') }}" method="GET">
+        <label for="user_id">ユーザー名：</label>
+        <div class="selectbox">
+            <select name="user_id" id="user_id" onchange="this.form.submit()">
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}" {{ request('user_id', auth()->id()) == $user->id ? 'selected' : '' }}>
+                    {{ $user->name }} (ID: {{ $user->id }})
+                </option>
+            @endforeach
+        </select>
+        </div>
+    </form>
     </div>
 
     <!--データテーブル-->
