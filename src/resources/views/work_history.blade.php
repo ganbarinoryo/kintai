@@ -49,7 +49,7 @@
                     @csrf
                     <button class="header-nav__button">ログアウト</button>
                 </form>
-            </li>k
+            </li>
             @endif
           </ul>
         </div>
