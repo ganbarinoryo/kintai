@@ -8,6 +8,7 @@ use App\Http\Controllers\ClockController;
 use App\Http\Controllers\BreakTimeController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\WorkHistoryController;
 
 
 
@@ -59,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
     //ユーザー情報の一覧表示
     Route::get('/worker', [WorkerController::class, 'worker']);
     Route::get('/worker', [WorkerController::class, 'index'])->name('worker.index');
+
+    //ユーザーの個別勤怠情報の一覧表示
+    Route::get('/work_history', [WorkHistoryController::class, 'work_history']);
+    Route::get('/work_history', [WorkHistoryController::class, 'index'])->name('work_history')->middleware('auth');
+
+
 
     // 特定の日付の出勤情報の表示
     Route::get('/attendance/{date}', [AttendanceController::class, 'showAttendanceByDate'])->name('attendance.show');

@@ -33,7 +33,7 @@
             </li>
 
             <li class="header-nav__item">
-                <form action="" method="">
+                <form action="/work_history" method="get">
                     @csrf
                     <button class="header-nav__button">個別勤怠一覧</button>
                 </form>
