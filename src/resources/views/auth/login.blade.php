@@ -30,7 +30,9 @@
                     <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}" />
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('email')
+                    <span>{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>
@@ -41,7 +43,9 @@
                     <input type="password" name="password" placeholder="パスワード" value="" />
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('password')
+                    <span>{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>

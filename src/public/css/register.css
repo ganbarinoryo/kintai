@@ -98,6 +98,12 @@ body {
     color: blue;
 }
 
+.form__error {
+    padding-top: 3px;
+    text-align: center;
+    font-size: small;
+}
+
 .footer {
     position: fixed;
     left: 0;

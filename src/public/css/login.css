@@ -84,6 +84,12 @@ body {
     cursor: pointer;
 }
 
+.form__error {
+    padding-top: 3px;
+    text-align: center;
+    font-size: small;
+}
+
 .form__register-link {
     text-align: center;
     padding: 10px
@@ -98,6 +104,8 @@ body {
     text-decoration: none;
     color: #1947ff;
 }
+
+
 
 .footer {
     position: fixed;

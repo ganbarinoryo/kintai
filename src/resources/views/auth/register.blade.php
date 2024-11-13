@@ -26,10 +26,12 @@
         <div class="form__group">
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="text" name="name" placeholder="名前" value="{{ old('name') }}" />
+                    <input type="text" name="name" placeholder="名前" value="{{ old('name') }}" class="@error('name') is-invalid @enderror"/>
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('name')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>
@@ -37,10 +39,12 @@
         <div class="form__group">
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}" />
+                    <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}" class="@error('email') is-invalid @enderror"/>
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('email')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>
@@ -48,10 +52,12 @@
         <div class="form__group">
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="password" name="password" placeholder="パスワード" value="" />
+                    <input type="password" name="password" placeholder="パスワード" value="" class="@error('password') is-invalid @enderror"/>
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('password')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>
@@ -59,10 +65,12 @@
         <div class="form__group">
             <div class="form__group-content">
                 <div class="form__input--text">
-                    <input type="password" name="password_confirmation" placeholder="確認パスワード" value="" />
+                    <input type="password" name="password_confirmation" placeholder="確認パスワード" value="" class="@error('password_confirmation') is-invalid @enderror"/>
                 </div>
                 <div class="form__error">
-                <!--バリデーション実装時に記述-->
+                @error('password_confirmation')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
         </div>

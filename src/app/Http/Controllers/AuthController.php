@@ -25,9 +25,9 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // バリデーションエラーがあればリダイレクト
+        // バリデーション失敗時の処理
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // ユーザー作成
@@ -42,5 +42,19 @@ class AuthController extends Controller
 
         // サンクスページにリダイレクト
         return redirect()->route('thanks');
+    }
+
+    public function login(Request $request)
+    {
+        // バリデーションルールを定義
+        $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+        ]);
+
+        // バリデーション失敗時の処理
+        if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+        }
     }
 }
