@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -12,8 +13,14 @@ class UserFactory extends Factory
      *
      * @return array
      */
+
+    protected $model = \App\Models\User::class;
+
     public function definition()
     {
+        // 日本のロケールに設定
+        $faker = \Faker\Factory::create('ja_JP');
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
