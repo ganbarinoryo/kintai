@@ -9,6 +9,7 @@
 #作成目的
 
 社員の勤怠管理のために導入し、人事評価に活用する
+(使用イメージを出すため社員のダミーデータを入れています)
 
 #アプリケーション URL
 
@@ -64,7 +65,7 @@ git@github.com:ganbarinoryo/kintai.git
 
 cp .env.example .env
 
-3.データベースの設定を下記のように編集してください。
+3.作成した.env ファイルのデータベースの設定を下記のように編集してください。
 
 DB_CONNECTION=mysql
 DB_HOST=mysql
