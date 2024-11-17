@@ -101,10 +101,18 @@ docker-compose exec app php artisan migrate
 
 http://localhost
 
-#テストユーザー
+#テストユーザー 1
 
 ・山田太郎
 
 email : yamada@gmail.com
 
 password : yamadatarou
+
+#テストユーザー 2
+
+・山田二郎
+
+email : yamadazi@gmail.com
+
+password : yamadazirou
